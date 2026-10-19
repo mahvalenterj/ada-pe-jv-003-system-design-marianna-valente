@@ -1,0 +1,150 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="IBH0x8brdMiHgBn0tSKB">
+    <mxGraphModel dx="1324" dy="529" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" value="Black Friday · Saga orquestrada na AWS" vertex="1">
+          <mxGeometry height="40" width="1120" x="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cli" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Clientes&lt;br&gt;&lt;small&gt;app e site&lt;/small&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="520" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;" value="API Gateway + Application Load Balancer · Auto Scaling" vertex="1">
+          <mxGeometry height="50" width="1120" x="40" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc" parent="1" style="swimlane;startSize=30;html=1;fontSize=16;fillColor=#f5f5f5;strokeColor=#147EBA;" value="VPC · região sa-east-1 (São Paulo) · AZ A + AZ B" vertex="1">
+          <mxGeometry height="560" width="1160" x="20" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="chk" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;1. Checkout · Orquestrador&lt;/b&gt;&lt;br&gt;&lt;small&gt;cria pedido PENDENTE&lt;br&gt;&lt;font color=&quot;#B20000&quot;&gt;compensa: CANCELADO&lt;/font&gt;&lt;/small&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qry" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Consulta Meus Pedidos&lt;/b&gt;&lt;br&gt;&lt;small&gt;somente leitura&lt;/small&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="940" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Amazon SQS · fila de comandos e eventos da Saga" vertex="1">
+          <mxGeometry height="50" width="640" x="260" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="dbp" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Pedidos + estado da Saga&lt;br&gt;&lt;small&gt;RDS principal · AZ A&lt;/small&gt;" vertex="1">
+          <mxGeometry height="90" width="180" x="30" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="stb" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Standby Multi-AZ&lt;br&gt;&lt;small&gt;RDS · AZ B&lt;/small&gt;" vertex="1">
+          <mxGeometry height="90" width="180" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="obs" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;" value="CloudWatch + IAM&lt;br&gt;&lt;small&gt;monitoramento e acesso&lt;/small&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="20" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="est" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;2. Estoque&lt;/b&gt;&lt;br&gt;&lt;small&gt;reserva o produto&lt;br&gt;&lt;font color=&quot;#B20000&quot;&gt;compensa: libera&lt;/font&gt;&lt;/small&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="270" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="pag" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;3. Pagamento&lt;/b&gt;&lt;br&gt;&lt;small&gt;cobra o cliente&lt;br&gt;&lt;font color=&quot;#B20000&quot;&gt;compensa: estorna&lt;/font&gt;&lt;/small&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="490" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="env" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;4. Envio&lt;/b&gt;&lt;br&gt;&lt;small&gt;agenda a entrega&lt;br&gt;&lt;font color=&quot;#B20000&quot;&gt;compensa: cancela&lt;/font&gt;&lt;/small&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="710" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="dbe" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Banco Estoque" vertex="1">
+          <mxGeometry height="80" width="140" x="290" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="dbg" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Banco Pagamento" vertex="1">
+          <mxGeometry height="80" width="140" x="510" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="dbv" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Banco Envio" vertex="1">
+          <mxGeometry height="80" width="140" x="730" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="rds" parent="vpc" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="ElastiCache Redis&lt;br&gt;&lt;small&gt;cache do status&lt;/small&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="950" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="rep" parent="vpc" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" value="Réplicas de leitura&lt;br&gt;&lt;small&gt;RDS · AZ A e AZ B&lt;/small&gt;" vertex="1">
+          <mxGeometry height="90" width="180" x="950" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="vpc" source="chk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="dbp" value="grava estado">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="vpc" source="chk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;dashed=1;startArrow=classic;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="sqs" value="comandos / eventos">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="90" />
+              <mxPoint x="240" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="vpc" source="sqs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;startArrow=classic;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;exitX=0.15625;exitY=1;entryX=0.5;entryY=0;" target="est">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="vpc" source="sqs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;startArrow=classic;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="pag">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="vpc" source="sqs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;startArrow=classic;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;exitX=0.84375;exitY=1;entryX=0.5;entryY=0;" target="env">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="vpc" source="est" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="dbe" value="@Transactional">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="vpc" source="pag" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="dbg">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="vpc" source="env" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="dbv">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="vpc" source="dbp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;strokeColor=#999999;fontColor=#666666;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="stb" value="réplica síncrona">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="vpc" source="dbp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;strokeColor=#999999;fontColor=#666666;exitX=1;exitY=0.7;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="rep" value="réplica assíncrona">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="235" y="233" />
+              <mxPoint x="235" y="263" />
+              <mxPoint x="920" y="263" />
+              <mxPoint x="920" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="vpc" source="qry" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="rds" value="lê">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="vpc" source="rds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="rep" value="cache miss">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="cli" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;" target="gw" value="HTTPS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="gw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;exitX=0.08928571428571429;exitY=1;entryX=0.5;entryY=0;" target="chk" value="POST pedido">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="gw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;labelBackgroundColor=default;defaultLabelBackgroundColor=gap;labelPlacement=auto;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;exitX=0.9107142857142857;exitY=1;entryX=0.5;entryY=0;" target="qry" value="GET status">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacingLeft=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Caminho feliz:&lt;/b&gt; 1 → 2 → 3 → 4 e o pedido vira CONFIRMADO. O estoque é reservado ANTES da cobrança.&lt;br&gt;&lt;b&gt;&lt;font color=&quot;#B20000&quot;&gt;Fluxo de compensação:&lt;/font&gt;&lt;/b&gt; se um passo falha, o orquestrador dispara as compensações em ordem inversa. Ex.: estoque rejeita → pedido CANCELADO, sem cobrança.&lt;br&gt;&lt;small&gt;Legenda: tracejado = assíncrono via fila · cinza = replicação de dados · vermelho = compensação&lt;/small&gt;" vertex="1">
+          <mxGeometry height="90" width="1160" x="20" y="840" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
