@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  error:
+    include-message: never      # A05: não vazar detalhes internos em mensagens de erro
+    include-stacktrace: never
+
+spring:
+  application:
+    name: checkout-security
+
+app:
+  # Laboratório: segredo HS256 para assinar/validar o JWT local.
+  # PRODUÇÃO: remova e use o IdP ->
+  #   spring.security.oauth2.resourceserver.jwt.jwk-set-uri: https://keycloak/realms/checkout/protocol/openid-connect/certs
+  jwt:
+    hmac-secret: ${JWT_HMAC_SECRET:change-me-dev-only-0123456789-0123456789-0123456789}
+  cors:
+    allowed-origins: https://app.checkout.example.com
+  webhook:
+    # Allowlist de hosts de callback. Vazia = só bloqueia destinos internos (sem restringir host externo).
+    allowed-hosts: ""
+
+logging:
+  level:
+    org.springframework.security: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

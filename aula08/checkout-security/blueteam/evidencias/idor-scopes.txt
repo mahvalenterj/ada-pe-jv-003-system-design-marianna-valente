@@ -1,0 +1,11 @@
+# 1) alice lê o PRÓPRIO pedido 1001 (esperado 200)
+HTTP 200
+# 2) IDOR: alice tenta ler pedido do bob 2001 (esperado 404, não vaza)
+{"timestamp":"2026-10-28T19:04:33.156+00:00","status":404,"error":"Not Found","path":"/orders/2001"}
+HTTP 404
+# 3) sem token (esperado 401)
+HTTP 401
+# 4) token sem scope orders.read (esperado 403)
+HTTP 403
+# 5) JWT tampering: trocar 1 char da assinatura (esperado 401)
+HTTP 401
